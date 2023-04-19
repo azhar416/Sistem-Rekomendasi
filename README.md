@@ -129,12 +129,12 @@ Sebelum melakukan pelatihan model, dataset akan di-split sebesar 70% untuk data 
 
 Model yang dilatih adalah:
 - XGBoost
- - Merupakan pengembangan dari Gradient Boosting
- - Cocok untuk dataset yang kompleks karena opsi hyperparameter yang banyak.
+    - Merupakan pengembangan dari Gradient Boosting
+    - Cocok untuk dataset yang kompleks karena opsi hyperparameter yang banyak.
 
 - LGBM (Light Gradient-Boosting Machine)
- - Cocok untuk dataset yang besar karena penggunaan teknik histogram-based splitting.
- - Waktu training lebih cepat karena adanya teknik pengoptimalan.
+    - Cocok untuk dataset yang besar karena penggunaan teknik histogram-based splitting.
+    - Waktu training lebih cepat karena adanya teknik pengoptimalan.
 
 XGBoost merupakan model hasil dari pengembangan dan pengoptimalan dari Gradient Boosting. Model ini merupakan ensemble model untuk meningkatkan kinerja model. Cara kerja XGBoost adalah dengan memperbaiki model secara bertahap dengan menambahkan model baru yang disebut "weak learner". Setiap model baru (weak learner) berusaha untuk memperbaiki kesalahan prediksi yang dilakukan oleh model sebelumnya. Model ini menggunakan teknik logistic regression untuk memprediksi nilai probabilitas target. 
 
