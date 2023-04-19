@@ -176,6 +176,16 @@ LGBMClassifier(
 )
 ```
 
+### Hasil Rekomendasi
+
+Berikut merupakan 10 rekomendasi lagu dari model Xgboost
+
+![REKOMENDASI_XGBOOST](./img/rekomendasi_xgboost.png)
+
+Berikut merupakan 10 rekomendasi lagu dari model LGBM
+
+![REKOMENDASI_LGBM](./img/rekomendasi_lgbm.png)
+
 ## Evaluasi
 
 Metric yang digunakan untuk evaluasi model adalah ***ROC AUC***.
@@ -206,13 +216,3 @@ Hasil dari Evaluasi Model :
 ![LGBM_EVAL](./img/lgbm_eval.png)
 
 Dilihat dari hasil evaluasi, Performa XGBoost lebih baik dari LGBM dalam kasus ini. Sehingga disarankan menggunakan Model XGBoost.
-
-## Hasil Rekomendasi
-
-Berikut merupakan 10 rekomendasi lagu dari model Xgboost
-
-![REKOMENDASI_XGBOOST](./img/rekomendasi_xgboost.png)
-
-Berikut merupakan 10 rekomendasi lagu dari model LGBM
-
-![REKOMENDASI_LGBM](./img/rekomendasi_lgbm.png)
