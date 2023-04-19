@@ -180,11 +180,26 @@ LGBMClassifier(
 
 Berikut merupakan 10 rekomendasi lagu dari model Xgboost
 
-![REKOMENDASI_XGBOOST](./img/rekomendasi_xgboost.png)
+|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 Berikut merupakan 10 rekomendasi lagu dari model LGBM
 
-![REKOMENDASI_LGBM](./img/rekomendasi_lgbm.png)
+| User ID | Song ID |
+|---|---|
+| 3599 | 81696 |
+|   | 35322 |
+|   | 232217 |
+|   | 244092 |
+|   | 227594 |
+|   | 34998 |
+|   | 219455 |
+|   | 126701 |
+|   | 112338 |
+|   | 142544 |
 
 ## Evaluasi
 
