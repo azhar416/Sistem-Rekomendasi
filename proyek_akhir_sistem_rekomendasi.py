@@ -250,6 +250,8 @@ for col in train.select_dtypes(include=['object']).columns:
 for col in train.select_dtypes(include=['category']).columns:
     train[col] = train[col].cat.codes
 
+train.head()
+
 train.shape
 
 """## Modeling"""
@@ -321,10 +323,17 @@ lgbm_model = lgb.LGBMClassifier(**params)
 
 lgbm_model.fit(X_train, y_train)
 
-"""## Evaluasi
+import pickle
 
-### XGBoost
-"""
+pickle.dump(xgb_model, open(root + 'XGB_Model.pkl', 'wb'))
+pickle.dump(lgbm_model, open(root + 'LGB_Model.pkl', 'wb'))
+
+"""## Evaluasi"""
+
+xgbm = pickle.load(open(root + "XGB_Model.pkl", 'rb'))
+lgbm = pickle.load(open(root + "LGB_Model.pkl", 'rb'))
+
+"""### XGBoost"""
 
 y_pred_xgb = xgb_model.predict_proba(X_test)[::,1]
 
@@ -417,3 +426,87 @@ print(f"F1 Score LightGBM: {f1_rf}")
 
 # Confusion Matrix Random Forest
 print("Cofusion Matrix LightGBM: \n", confusion_matrix(y_test, y_pred_convert))
+
+"""### Hasil Rekomendasi
+
+Membuat dataframe secara manual untuk tes rekomendasi
+"""
+
+user_id = train.msno.sample(1).iloc[0]
+
+song_listened = train[train['msno'] == user_id]
+song_not_listened = train[~train['song_id'].isin(song_listened['song_id'].values)]['song_id']
+
+song_not_listened = pd.DataFrame(data=song_not_listened)
+
+song_not_listened = song_not_listened.assign(
+    msno=np.repeat(user_id, len(song_not_listened)), 
+    source_system_tab=np.repeat(train.source_system_tab.mode()[0], len(song_not_listened)), 
+    source_screen_name=np.repeat(train.source_screen_name.mode()[0], len(song_not_listened)), 
+    source_type=np.repeat(train.source_screen_name.mode()[0], len(song_not_listened))
+)
+
+new_song = train[['song_id', 'song_length', 'genre_ids', 'artist_name', 'composer', 'lyricist', 'language']].copy()
+
+new_song = new_song.drop_duplicates(subset=['song_id'])
+
+song_not_listened = song_not_listened.merge(new_song, on='song_id', how='left')
+
+new_member = train[['msno','city','bd','gender','registered_via','registration_init_time_year','registration_init_time_month','registration_init_time_day','expiration_date_year','expiration_date_month','expiration_date_day']].copy()
+
+new_member = new_member[new_member['msno'] == user_id]
+
+new_member = new_member.drop_duplicates()
+
+song_not_listened = song_not_listened.merge(new_member, on='msno', how='left')
+
+song_not_listened = song_not_listened.drop_duplicates(subset=['song_id'])
+
+song_not_listened.head()
+
+song_not_listened.shape
+
+song_not_listened = song_not_listened.reindex(columns=[
+    'msno', 
+    'song_id', 
+    'source_system_tab', 
+    'source_screen_name',
+    'source_type',
+    'song_length',
+    'genre_ids',
+    'artist_name',
+    'composer',
+    'lyricist',
+    'language',
+    'city',
+    'bd',
+    'gender',
+    'registered_via',
+    'registration_init_time_year',
+    'registration_init_time_month',
+    'registration_init_time_day',
+    'expiration_date_year',
+    'expiration_date_month',
+    'expiration_date_day',
+    ])
+
+song_not_listened.head()
+
+hasil_prediksi_xgbm = xgbm.predict_proba(song_not_listened)[::,1]
+
+hasil_prediksi_lgbm = lgbm.predict_proba(song_not_listened)[::,1]
+
+song_not_listened['prediksi_xgboost'] = hasil_prediksi_xgbm
+song_not_listened['prediksi_lightgbm'] = hasil_prediksi_lgbm
+
+"""#### Hasil Rekomendasi Menurut XGBoost Model"""
+
+rekomendasi_xgboost = song_not_listened[song_not_listened['prediksi_xgboost'] > 0.49619999527931213].copy()
+rekomendasi_xgboost = rekomendasi_xgboost.sort_values('prediksi_xgboost', ascending=False)
+rekomendasi_xgboost[['msno','song_id']].head(10)
+
+"""#### Hasil Rekomendasi Menurut LGBM Model"""
+
+rekomendasi_lightgbm = song_not_listened[song_not_listened['prediksi_lightgbm'] > 0.5023].copy()
+rekomendasi_lightgbm = rekomendasi_xgboost.sort_values('prediksi_lightgbm', ascending=False)
+rekomendasi_lightgbm[['msno','song_id']].head(10)

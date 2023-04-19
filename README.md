@@ -10,7 +10,9 @@ Beberapa tahun lalu, tidak terbayangkan bahwa seseorang yang sama akan mendengar
 
 Dengan pendengar yang mendengarkan seluruh genre dan jenis musik, algoritma akan kesulitan dalam beberapa area utama. Dengan tidak cukupnya data histori, bagaimana algoritma dapat mengetahui jika pendengar akan menyukai lagu baru atau artis yang baru? Dan bagaimana caranya untuk mengetahui lagu apa yang harus direkomendasikan kepada pendengar yang baru?
 
-Dengan permasalahan yang muncul tersebut, pembuatan sistem rekomendasi musik menggunakan machine learning merupakan sebuah solusi. Dengan sistem rekomendasi ini, baik pengguna baru ataupun pengguna yang mendengarkan seluruh jenis musik akan mendapatkan lagu rekomendasi yang lebih akurat dibandingkan dengan algoritma biasa. Model akan melakukan prediksi probabilitas dari user untuk mendengarkan lagu secara berulang setelah pendengaran pertama dalam beberapa waktu.
+Dengan permasalahan yang muncul tersebut, pembuatan sistem rekomendasi musik menggunakan machine learning merupakan sebuah solusi. Dengan sistem rekomendasi ini, baik pengguna baru ataupun pengguna yang mendengarkan seluruh jenis musik akan mendapatkan lagu rekomendasi yang lebih akurat dibandingkan dengan algoritma biasa. 
+
+***Model akan melakukan prediksi probabilitas dari user untuk mendengarkan lagu secara berulang setelah mendengar lagu yang direkomendasikan untuk pertama kalinya***. Dengan begitu, model akan merekomendasikan lagu tersebut kepada pengdengar. Pendekatan yang digunakan adalah **Content-Based Filtering** dimana model yang akan merekomendasikan lagu berdasarkan profil dari pendengar.
 
 Algoritma yang dapat digunakan adalah Gradient Boosting. Untuk permasalahan kali ini menggunakan pengembangan dari Gradient Boosting yaitu XGBoost dan LGBM. Metric utama dari model tersebut adalah ROC AUC.
 
@@ -22,32 +24,32 @@ Pada dataset tersebut tidak gunakan seluruhnya. Dataset yang digunakan antara la
 
 - train.csv
 Atribut:
-    - msno: user id
-    - song_id: song id
-    - source_system_tab: the name of the tab where the event was triggered. System tabs are used to categorize KKBOX mobile apps functions. For example, tab my library contains functions to manipulate the local storage, and tab search contains functions relating to search.
-    - source_screen_name: name of the layout a user sees.
-    - source_type: an entry point a user first plays music on mobile apps. An entry point could be album, online-playlist, song .. etc.
-    - target: this is the target variable. target=1 means there are recurring listening event(s) triggered within a month after the user’s very first observable listening event, target=0 otherwise.
+    - msno: merupakah user id
+    - song_id: merupakan id lagu
+    - source_system_tab: tab dimana lagu tersebut diputar. Contoh, pada tab my library memiliki fungsi untuk memanipulasi local storage dan tab search memiliki fungsi untuk mencari.
+    - source_screen_name: nama dari layout yang dilihat user.
+    - source_type: entry point dari pemutaran lagu yang dilakukan oleh pendengar. Entry point tersebut dapat berupa album, online-playlist, lagu, dll.
+    - target: merupakan target prediksi. target=1 berarti pendengar mendengarkan lagu tersebut secara berulang-ulang dalam sebulan sejak pertama kali mendengar. sementara target=0 sebaliknya.
 
 - members.csv
 Atribut:
-    - msno
-    - city
-    - bd: age. Note: this column has outlier values, please use your judgement.
-    - gender
-    - registered_via: registration method
-    - registration_init_time: format %Y%m%d
-    - expiration_date: format %Y%m%d
+    - msno: merupakan user id
+    - city: kota user
+    - bd: merupakan umur member.
+    - gender: merupakan jenis kelamin member
+    - registered_via: merupakan metode registrasi akun
+    - registration_init_time: merupakan tanggal registrasi. format %Y%m%d
+    - expiration_date: merupakan tanggal kadaluarsa. format %Y%m%d
 
 - songs.csv
 Atribut:
-    - song_id
-    - song_length: in ms
-    - genre_ids: genre category. Some songs have multiple genres and they are separated by `|`
-    - artist_name
-    - composer
-    - lyricist
-    - language
+    - song_id: merupakan id lagu
+    - song_length: panjang durasi lagu. satuan ms
+    - genre_ids: genre category. Beberapa lagu memiliki genre yang banyak yang dipisahkan oleh `|`
+    - artist_name: merupakan nama artis
+    - composer: merupakan nama komposer lagu
+    - lyricist: merupakan nama pembuat lirik
+    - language: merupakan bahasa yang digunakan pada lagu
 
 ***Data yang digunakan pada data train hanya 45%.***
 
@@ -204,3 +206,13 @@ Hasil dari Evaluasi Model :
 ![LGBM_EVAL](./img/lgbm_eval.png)
 
 Dilihat dari hasil evaluasi, Performa XGBoost lebih baik dari LGBM dalam kasus ini. Sehingga disarankan menggunakan Model XGBoost.
+
+## Hasil Rekomendasi
+
+Berikut merupakan 10 rekomendasi lagu dari model Xgboost
+
+![REKOMENDASI_XGBOOST](./img/rekomendasi_xgboost.png)
+
+Berikut merupakan 10 rekomendasi lagu dari model LGBM
+
+![REKOMENDASI_LGBM](./img/rekomendasi_lgbm.png)
