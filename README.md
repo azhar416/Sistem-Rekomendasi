@@ -22,32 +22,32 @@ Pada dataset tersebut tidak gunakan seluruhnya. Dataset yang digunakan antara la
 
 - train.csv
 Atribut:
- - msno: user id
- - song_id: song id
- - source_system_tab: the name of the tab where the event was triggered. System tabs are used to categorize KKBOX mobile apps functions. For example, tab my library contains functions to manipulate the local storage, and tab search contains functions relating to search.
- - source_screen_name: name of the layout a user sees.
- - source_type: an entry point a user first plays music on mobile apps. An entry point could be album, online-playlist, song .. etc.
- - target: this is the target variable. target=1 means there are recurring listening event(s) triggered within a month after the user’s very first observable listening event, target=0 otherwise.
+    - msno: user id
+    - song_id: song id
+    - source_system_tab: the name of the tab where the event was triggered. System tabs are used to categorize KKBOX mobile apps functions. For example, tab my library contains functions to manipulate the local storage, and tab search contains functions relating to search.
+    - source_screen_name: name of the layout a user sees.
+    - source_type: an entry point a user first plays music on mobile apps. An entry point could be album, online-playlist, song .. etc.
+    - target: this is the target variable. target=1 means there are recurring listening event(s) triggered within a month after the user’s very first observable listening event, target=0 otherwise.
 
 - members.csv
 Atribut:
- - msno
- - city
- - bd: age. Note: this column has outlier values, please use your judgement.
- - gender
- - registered_via: registration method
- - registration_init_time: format %Y%m%d
- - expiration_date: format %Y%m%d
+    - msno
+    - city
+    - bd: age. Note: this column has outlier values, please use your judgement.
+    - gender
+    - registered_via: registration method
+    - registration_init_time: format %Y%m%d
+    - expiration_date: format %Y%m%d
 
 - songs.csv
 Atribut:
- - song_id
- - song_length: in ms
- - genre_ids: genre category. Some songs have multiple genres and they are separated by `|`
- - artist_name
- - composer
- - lyricist
- - language
+    - song_id
+    - song_length: in ms
+    - genre_ids: genre category. Some songs have multiple genres and they are separated by `|`
+    - artist_name
+    - composer
+    - lyricist
+    - language
 
 ***Data yang digunakan pada data train hanya 45%.***
 
@@ -186,20 +186,20 @@ Selain ROC AUC, confusion matrix juga digunakan terutama akurasi.
 
 Hasil dari Evaluasi Model :
 - XGBoost
- - ROC AUC Score : 0.6586
- - Akurasi : 0.6592
- - Recall : 0.6586
- - Presisi : 0.6621
- - F1 Score : 0.6838
+    - ROC AUC Score : 0.6586
+    - Akurasi : 0.6592
+    - Recall : 0.6586
+    - Presisi : 0.6621
+    - F1 Score : 0.6838
 
 ![XGBOOST_EVAL](./img/xgboost_eval.png)
 
 - LGBM
- - ROC AUC Score : 0.6420
- - Akurasi : 0.6422
- - Recall : 0.6420
- - Presisi : 0.6424
- - F1 Score : 0.6530
+    - ROC AUC Score : 0.6420
+    - Akurasi : 0.6422
+    - Recall : 0.6420
+    - Presisi : 0.6424
+    - F1 Score : 0.6530
 
 ![LGBM_EVAL](./img/lgbm_eval.png)
 
